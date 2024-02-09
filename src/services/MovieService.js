@@ -1,13 +1,14 @@
-const bearerToken = "1234567890";
+const env = require('../components/env.js');
+const Config = require('../components/Config.js')[env];
 export async function searchMovie(search_data) {
 
     try{
-
+        console.log(Config);
         console.log('search_data: ' + search_data);
 
-        const response = await fetch('https://api.se-rmutl.net/api/movie/search?search_text='+search_data, {
+        const response = await fetch(`${Config.API_URL}/api/movie/search?search_text=`+search_data, {
             headers: {
-              Authorization: `Bearer ${bearerToken}`,
+              Authorization: `Bearer ${Config.bearer_token}`,
             },
           }
         );
@@ -27,9 +28,9 @@ export async function getAllMovies() {
     try{
         //const response = await fetch('/api/users'); 
         //const response = await fetch('/api/movie/all');
-        const response = await fetch('https://api.se-rmutl.net/api/movie/all', {
+        const response = await fetch(`${Config.API_URL}/api/movie/all`, {
             headers: {
-              Authorization: `Bearer ${bearerToken}`,
+              Authorization: `Bearer ${Config.bearer_token}`,
             },
           }
         );
@@ -43,10 +44,10 @@ export async function getAllMovies() {
 }
 
 export async function createMovie(data) {
-    const response = await fetch(`https://api.se-rmutl.net/api/movie/insert`, {
+    const response = await fetch(`${Config.API_URL}/api/movie/insert`, {
         //mode: 'no-cors',
         method: 'POST',
-        headers: {'Content-Type': 'application/json',Authorization: `Bearer ${bearerToken}`},
+        headers: {'Content-Type': 'application/json',Authorization: `Bearer ${Config.bearer_token}`},
         body: JSON.stringify(data)
 
       })
